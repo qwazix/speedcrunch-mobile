@@ -1,6 +1,7 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2014 @qwazix
-// Copyright (C) 2018 Mikko Syrjä
+// Copyright (C) 2004 Ariya Hidayat <ariya@kde.org>
+// Copyright (C) 2008, 2009, 2010, 2013 @heldercorreia
+// Copyright (C) 2015 Pol Welter <polwelter@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,21 +18,29 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifdef QT_QML_DEBUG
-#include <QtQuick>
-#endif
+#ifndef CORE_OPCODE_H
+#define CORE_OPCODE_H
 
-#include <sailfishapp.h>
-#include "core/evaluator.h"
-#include "src/manager.h"
-#include <QtQml>
+#include<QString>
 
-int main(int argc, char *argv[])
+
+class Opcode
 {
-	Manager manager;
-	qmlRegisterType<Manager>("harbour.speedcrunch.Manager", 1, 0, "Manager");
-//	view->rootContext()->setContextProperty("mn",&mn );
+public:
+    enum  Type { Nop, Load, Ref, Function, Add, Sub, Neg, Mul, Div, Pow,
+           Fact, Modulo, IntDiv, LSh, RSh, BAnd, BOr, Conv };
 
-	return SailfishApp::main(argc, argv);
-}
+    Type type;
+    unsigned index;
 
+    // TODO: this is only needed for Conv Op. Maybe refactor this to a smarter place?
+    // TODO: only keep a pointer to the string
+    QString text;
+
+    Opcode() : type(Nop), index(0) {}
+    Opcode(Type t) : type(t), index(0) {}
+    Opcode(Type t, QString txt) : type(t), index(0), text(txt) {}
+    Opcode(Type t, unsigned i): type(t), index(i) {}
+};
+
+#endif // CORE_OPCODE_H

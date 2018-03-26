@@ -1,6 +1,6 @@
 // This file is part of the SpeedCrunch project
-// Copyright (C) 2014 @qwazix
-// Copyright (C) 2018 Mikko Syrjä
+// Copyright (C) 2013 @heldercorreia
+// Copyright (C) 2015 Pol Welter <polwelter@gmail.com>
 //
 // This program is free software; you can redistribute it and/or
 // modify it under the terms of the GNU General Public License
@@ -17,21 +17,17 @@
 // the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 // Boston, MA 02110-1301, USA.
 
-#ifdef QT_QML_DEBUG
-#include <QtQuick>
+#ifndef CORE_NUMBERFORMATTER_H
+#define CORE_NUMBERFORMATTER_H
+
+#include "math/quantity.h"
+
+#include <QtCore/QString>
+
+struct NumberFormatter {
+	static QString format(HNumber &num) { return format(Quantity(num)); }
+	static QString format(CNumber &num) { return format(Quantity(num)); }
+	static QString format(Quantity);
+};
+
 #endif
-
-#include <sailfishapp.h>
-#include "core/evaluator.h"
-#include "src/manager.h"
-#include <QtQml>
-
-int main(int argc, char *argv[])
-{
-	Manager manager;
-	qmlRegisterType<Manager>("harbour.speedcrunch.Manager", 1, 0, "Manager");
-//	view->rootContext()->setContextProperty("mn",&mn );
-
-	return SailfishApp::main(argc, argv);
-}
-

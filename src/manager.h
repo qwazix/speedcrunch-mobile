@@ -1,6 +1,26 @@
+// This file is part of the SpeedCrunch project
+// Copyright (C) 2014 @qwazix
+// Copyright (C) 2018 Mikko Syrjä
+//
+// This program is free software; you can redistribute it and/or
+// modify it under the terms of the GNU General Public License
+// as published by the Free Software Foundation; either version 2
+// of the License, or (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program; see the file COPYING.  If not, write to
+// the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+// Boston, MA 02110-1301, USA.
+
 #ifndef MANAGER_H
 #define MANAGER_H
-#include <QObject>                 //IMP
+
+#include <QObject>
 #include <QString>
 #include <QStringList>
 #include "core/evaluator.h"
@@ -8,29 +28,29 @@
 #include <QDebug>
 #include <QClipboard>
 
-class manager : public QObject     //IMP
+class Manager : public QObject
 {
-    Q_OBJECT                       //IMP
-private:
-    Evaluator * evl;
-    Settings * settings;
-    QClipboard *clipboard;
+	Q_OBJECT
 
 public:
+	Manager();
 
-    Q_INVOKABLE QString autoCalc(const QString&);
-    Q_INVOKABLE QString calc(const QString&);
-    Q_INVOKABLE void loadLayouts();
-    Q_INVOKABLE void restoreLayouts();
-    Q_INVOKABLE QString getFunctions(QString);
-    Q_INVOKABLE void setABC();
-    Q_INVOKABLE void setNumbers();
-    Q_INVOKABLE void setAngleModeRadian();
-    Q_INVOKABLE void setAngleModeDegree();
-    Q_INVOKABLE QString getAngleMode();
-    Q_INVOKABLE void setClipboard(QString);
+	Q_INVOKABLE QString autoCalc(const QString& input);
+	Q_INVOKABLE QString autoFix(const QString& input);
+	Q_INVOKABLE QString calculate(const QString& input);
+	Q_INVOKABLE QString getFunctions(QString filter);
+	Q_INVOKABLE void setAngleUnit(QString unit);
+	Q_INVOKABLE QString getAngleUnit() const;
+	Q_INVOKABLE void setResultFormat(QString format);
+	Q_INVOKABLE QString getResultFormat() const;
+	Q_INVOKABLE void setPrecision(QString precision);
+	Q_INVOKABLE QString getPrecision() const;
+	Q_INVOKABLE void setClipboard(QString text);
 
-    manager();
+private:
+	Evaluator* evaluator;
+	Settings* settings;
+	QClipboard* clipboard;
 };
 
-#endif // MANAGER_H
+#endif
